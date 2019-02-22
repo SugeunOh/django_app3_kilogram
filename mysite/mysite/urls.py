@@ -16,6 +16,8 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from kilogram import views  as kilogram_views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     url(r'^$', kilogram_views.IndexView.as_view(), name='root'),
@@ -25,3 +27,8 @@ urlpatterns = [
     url(r'^accounts/signup$', kilogram_views.CreateUserView.as_view(), name="signup"),                # 회원가입 화면
     url(r'^accounts/signup/done$', kilogram_views.RegisteredView.as_view(), name="create_user_done"), # 회원가입이 완료된 화면
 ]
+
+# 첫번째 인자 : 어떤 URL을 정적으로 추가할래?, 두번쨰 인자 : 실제는 어디에 있는데?
+urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+
+
