@@ -122,3 +122,6 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 LOGIN_REDIRECT_URL = '/kilogram/' # 로그인에 성공했을 때 리다이렉트로 연결되는 URL 지정.
+
+MEDIA_URL = '/files/'  # 업로드하는 과정을 처리하는 url지정.
+MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads') # 현재 프로젝트 경로에 uploads 폴더를 생성하여 이곳에 업로드한 파일을 저장하겠다는 것.
