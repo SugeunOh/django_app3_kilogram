@@ -21,5 +21,7 @@ urlpatterns = [
     url(r'^$', kilogram_views.IndexView.as_view(), name='root'),
     url(r'^admin/', admin.site.urls),
     url(r'^kilogram/', include('kilogram.urls')),
-    url(r'^accounts/', include('django.contrib.auth.urls')), # 인증관련된 views는 미리 정의가 되어있어 url만 추가해주면 되나보다.
+    url(r'^accounts/', include('django.contrib.auth.urls')), # 인증관련된 views는 미리 정의가 되어있어 url만 추가해주면 됨.
+    url(r'^accounts/signup$', kilogram_views.CreateUserView.as_view(), name="signup"),                # 회원가입 화면
+    url(r'^accounts/signup/done$', kilogram_views.RegisteredView.as_view(), name="create_user_done"), # 회원가입이 완료된 화면
 ]
