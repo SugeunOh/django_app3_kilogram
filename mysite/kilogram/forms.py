@@ -1,7 +1,8 @@
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
-
+from .models import Photo
+# 회원가입 폼
 class CreateUserForm(UserCreationForm): # id, pw만 입력받은 UserCreationForm을 확장시킬것이므로 상속받음
     email = forms.EmailField(required=True)
 
@@ -15,3 +16,10 @@ class CreateUserForm(UserCreationForm): # id, pw만 입력받은 UserCreationFor
         if commit:
             user.save()              # 객체에 대한 모든 정보를 DB에 저장.
         return user
+
+# 사진 업로드 폼
+class UploadForm(forms.ModelForm):
+    comment = forms.CharField(max_length=255)
+    class Meta:
+        model = Photo                         # 어떤 모델과 연결할지
+        exclude = ('thumnail_image', 'owner') # 입력받지 않을 필드를 표시가능
