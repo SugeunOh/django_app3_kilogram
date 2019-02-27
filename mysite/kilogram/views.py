@@ -7,7 +7,7 @@ from .forms import CreateUserForm, UploadForm
 from django.contrib.auth.decorators import login_required
 # Create your views here.
 
-@login_required
+@login_required   # 메소드에만 적용가능
 def upload(request):
     if request.method == "POST":
         form = UploadForm(request.POST, request.FILES) # 대용량인 이미지를 처리해야 하므로 두 매개변수를 넘겨줘야함.
