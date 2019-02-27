@@ -14,12 +14,12 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url
-from django.contrib import admin
 from . import views
+from django.contrib.auth.decorators import login_required
 
 app_name = 'kilogram'
 
 urlpatterns = [
-    url(r'^$', views.IndexView.as_view(), name='index'),
+    url(r'^$', login_required(views.IndexView.as_view()), name='index'),
     url(r'^upload$', views.upload, name='upload'),
 ]
