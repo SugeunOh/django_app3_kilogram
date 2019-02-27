@@ -5,6 +5,7 @@ from django.contrib.auth.forms import UserCreationForm # 장고의 기본적인 
 from django.core.urlresolvers import reverse_lazy
 from .forms import CreateUserForm, UploadForm
 from django.contrib.auth.decorators import login_required
+from django.views.generic.list import ListView
 # Create your views here.
 
 @login_required   # 메소드에만 적용가능
@@ -21,8 +22,14 @@ def upload(request):
     form = UploadForm()
     return render(request, 'kilogram/upload.html', {'form' : form})
 
-class IndexView(TemplateView):     # 제네릭의 TemplateView는 아무기능 없이 템플릿만 표시해 주는 뷰에서 사용
-    template_name = 'kilogram/index.html'
+class IndexView(ListView):
+    # model = Photo 이렇게 해주면 사용자를 안가리고 모든 photo객체가 넘어가게 되므로 아래와 같이 쿼리를 지정해줌.
+    context_object_name = 'user_photo_list' # 템플릿에 전달되는 이름
+    paginate_by = 2 # 사진을 몇개씩 보여줄 것인지 지정.
+
+    def get_queryset(self):
+        user = self.request.user    # 로그인되어있는 사용자
+        return user.photo_set.all().order_by('-pub_date')
 
 class CreateUserView(CreateView):  # 제네릭의 CreateView는 폼하고 연결돼서, 혹은 모델하고 연결돼서 새로운 데이터를 넣을 때 사용.
     template_name = 'registration/signup.html'     # 회원가입 할 때 띄울 폼 템플릿
