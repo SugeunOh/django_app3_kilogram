@@ -17,7 +17,7 @@
         <h2>{{profile_user.profile.nickname}}</h2>
         {% endif %}
         {% if user == profile_user %}   <!-- 로그인한 사용자와 profile_user(프로필 소유자)가 일치할 때만 프로필 편집이 가능하도록 함 -->
-        <a href="#">
+        <a href="{% url 'kilogram:profile_update' %}">
             <button type="button" class="btn btn-default">프로필 편집</button></a></h2>
         {% endif %}
         <h3> username: {{profile_user.username}} <br>
