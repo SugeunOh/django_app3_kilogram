@@ -20,4 +20,9 @@ class Photo(models.Model):
     pub_date = models.DateTimeField(auto_now_add=True)  # 사용자가 입력하지 않고 업로드 하는 순간 자동으로 세팅이 됨.
 
 
+class Profile(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL) # 현 계정의 사용자를 가져올 수 있음.
+    nickname = models.CharField(max_length=64)
+    profile_photo = models.ImageField(blank=True)                 # 값을 채워넣지 않아도 되는 속성.
+
 
