@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from .models import Photo
+from .models import Profile
 # 회원가입 폼
 class CreateUserForm(UserCreationForm): # id, pw만 입력받은 UserCreationForm을 확장시킬것이므로 상속받음
     email = forms.EmailField(required=True)
@@ -17,9 +18,24 @@ class CreateUserForm(UserCreationForm): # id, pw만 입력받은 UserCreationFor
             user.save()              # 객체에 대한 모든 정보를 DB에 저장.
         return user
 
+
 # 사진 업로드 폼
 class UploadForm(forms.ModelForm):
     comment = forms.CharField(max_length=255)
     class Meta:
         model = Photo                         # 어떤 모델과 연결할지
         exclude = ('thumbnail_image', 'owner') # 입력받지 않을 필드를 표시가능, 이 부분은 코드로 처리해주기 위해
+
+
+# 프로필사진을 업데이트할 때 사용자의 정보도 같이 업데이트 할 수 있도록 사용자정보에 대한 폼, 프로필에 대한 폼 생성
+class UserForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', ]
+
+
+class ProfileForm(forms.ModelForm):
+    profile_photo = forms.ImageField(required=False) # 선택적으로 입력할 수 있음.
+    class Meta:
+        model = Profile
+        fields = ['nickname', 'profile_photo', ]
