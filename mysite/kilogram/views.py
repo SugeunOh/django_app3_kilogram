@@ -50,12 +50,20 @@ class RegisteredView(TemplateView): # 회원가입이 완료된 경우
     template_name = 'registration/signup_done.html'
 '''
 
+@login_required
+def profile(request, pk):
+    user = get_object_or_404(User, pk=pk)
+    photos = user.photo_set.filter(is_public=True)[:20]
+    context = {"profile_user": user, "photos": photos}
+    return render(request, 'kilogram/profile.html', context)
 
+
+'''
 class ProfileView(DetailView):
     context_object_name = 'profile_user' # model로 지정해준 User모델에 대한 객체와 로그인한 사용자랑 명칭이 겹쳐버리기 때문에 이를 지정해줌.
     model = User
     template_name = 'kilogram/profile.html'
-
+'''
 
 class ProfileUpdateView(View): # 간단한 View클래스를 상속 받았으므로 get함수와 post함수를 각각 만들어줘야한다.
     # 프로필 편집에서 보여주기위한 get 메소드
